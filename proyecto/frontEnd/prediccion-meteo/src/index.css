@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #e3f2fd, #bbdefb);
+}
+
+.container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+.logo {
+  display: block;
+  width: 120px;
+  margin: 0 auto 2rem;
+  border: 3px solid #000000; /* Color del marco */
+  border-radius: 12px;        /* Bordes redondeados */
+  padding: 0px;               /* Espacio entre imagen y borde */
+  background-color: white;    /* Fondo para que no se vea raro con fondo claro */
+}
+
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+.resultado {
+  margin-top: 1.5rem;
+  background-color: #e3f2fd;
+  padding: 1rem;
+  border-radius: 8px;
+  color: #0d47a1;
+}
+
+.resultado h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+.resultado ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+}
+
+.aviso-aemet {
+  font-size: 0.85rem;
+  margin-top: 1.5rem;
+  color: #444;
+  line-height: 1.4;
+}
+
+.error {
+  margin-top: 1rem;
+  color: red;
+  font-weight: bold;
+}
+
+button + button {
+  margin-top: 0.8rem;
+}
+

@@ -1,0 +1,9 @@
+requests
+python-dotenv
+pandas
+scikit-learn
+joblib
+fastapi
+uvicorn
+pyarrow
+cors
