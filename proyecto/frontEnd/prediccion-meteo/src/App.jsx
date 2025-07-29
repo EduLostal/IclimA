@@ -8,10 +8,10 @@ function App() {
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(false);
 
-  // Obtener la fecha máxima permitida (hoy +1) en zona horaria UTC+1
+  // Obtener la fecha máxima permitida (hoy +1) 
   const getMaxFecha = () => {
     const ahora = new Date();
-    ahora.setUTCHours(ahora.getUTCHours() + 1); // UTC+1
+    ahora.setUTCHours(ahora.getUTCHours() + 1); 
     ahora.setDate(ahora.getDate() + 1);
 
     const año = ahora.getFullYear();

@@ -30,11 +30,11 @@ class Predictor:
         if self.df is None:
             raise ValueError("Debes cargar los datos primero.")
 
-        # Buscar el dato más cercano posible hacia atrás (sin límite real)
-        dias_retroceso = 1
+        # Buscar el dato más cercano posible hacia atrás 
         encontrado = False
+        dias_retroceso = 1
 
-        while dias_retroceso <= 7:  # Por seguridad, máximo 7 días hacia atrás
+        while dias_retroceso <= 7: #Máximo 7 días
             fecha_busqueda = fecha_prediccion - timedelta(days=dias_retroceso)
             print(f"Buscando datos de {fecha_busqueda.strftime('%Y-%m-%d')} para predecir {fecha_prediccion.strftime('%Y-%m-%d')}...")
 
@@ -65,16 +65,16 @@ class Predictor:
             "hrMedia": fila_lag["hrMedia"],
             "racha": fila_lag["racha"],
             "tmed_lag1": fila_lag["tmed"],
+            "tmax_lag1": fila_lag["tmax"],
+            "tmin_lag1": fila_lag["tmin"],
             "prec_lag1": fila_lag["prec"],
-            "hrMedia_lag1": fila_lag["hrMedia"],
-            "velmedia_lag1": fila_lag["velmedia"],
-            "racha_lag1": fila_lag["racha"],
             "año": fecha_prediccion.year,
             "mes": fecha_prediccion.month,
             "dia": fecha_prediccion.day,
             "dia_del_año": fecha_prediccion.timetuple().tm_yday,
             "dia_semana": fecha_prediccion.weekday()
         }
+
 
         input_df = pd.DataFrame([entrada])
 
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     predictor.cargar_modelo_y_datos()
 
     # Definir la fecha que quieres predecir
-    fecha_prediccion = datetime(2025, 4, 28)  # Puedes cambiarlo
+    fecha_prediccion = datetime(2025, 4, 28)  
 
     input_df = predictor.preparar_input(fecha_prediccion)
 

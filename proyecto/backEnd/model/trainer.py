@@ -22,10 +22,10 @@ class Trainer:
             # Crear variables del día anterior (lag 1)
             df = df.sort_values(by=["año", "mes", "dia"])  # Aseguramos orden temporal
             df["tmed_lag1"] = df["tmed"].shift(1)
+            df["tmax_lag1"] = df["tmax"].shift(1)
+            df["tmin_lag1"] = df["tmin"].shift(1)
             df["prec_lag1"] = df["prec"].shift(1)
-            df["hrMedia_lag1"] = df["hrMedia"].shift(1)
-            df["velmedia_lag1"] = df["velmedia"].shift(1)
-            df["racha_lag1"] = df["racha"].shift(1)
+        
 
             # Eliminamos la primera fila que tendrá NaN en los lags
             df = df.dropna().reset_index(drop=True)
@@ -51,28 +51,37 @@ class Trainer:
                 n_estimators=300,
                 max_depth=10,
                 random_state=42,
-                n_jobs=-1  # Usa todos los núcleos disponibles
+                n_jobs=-1
             )
             modelo = MultiOutputRegressor(modelo_base)
             modelo.fit(X_train, y_train)
 
+            # Métricas en conjunto de entrenamiento
+            y_train_pred = modelo.predict(X_train)
+            r2_train = r2_score(y_train, y_train_pred, multioutput='uniform_average')
+            mae_train = mean_absolute_error(y_train, y_train_pred)
+
+            print("Resultados en conjunto de entrenamiento:")
+            print(f"R2 Score (train): {r2_train:.4f}")
+            print(f"Mean Absolute Error (MAE train): {mae_train:.4f}")
+
+            # Métricas en conjunto de test
             print("Evaluando modelo...")
             y_pred = modelo.predict(X_test)
-
             r2 = r2_score(y_test, y_pred, multioutput='uniform_average')
             mae = mean_absolute_error(y_test, y_pred)
 
             print(f"Resultados en conjunto de test:")
-            print(f"R2 Score: {r2:.4f}")
-            print(f"Mean Absolute Error (MAE): {mae:.4f}")
+            print(f"R2 Score (test): {r2:.4f}")
+            print(f"Mean Absolute Error (MAE test): {mae:.4f}")
 
             print(f"Guardando modelo en {self.model_path}...")
             joblib.dump(modelo, self.model_path)
 
             if os.path.exists(self.model_path):
-                print("✅ Modelo entrenado y guardado correctamente.")
+                print(" Modelo entrenado y guardado correctamente.")
             else:
-                print("❌ Error: El modelo no se ha guardado correctamente.")
+                print(" Error: El modelo no se ha guardado correctamente.")
 
         except Exception as e:
             print(f"Error durante el entrenamiento: {e}")

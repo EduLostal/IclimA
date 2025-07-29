@@ -24,10 +24,10 @@ body {
   display: block;
   width: 120px;
   margin: 0 auto 2rem;
-  border: 3px solid #000000; /* Color del marco */
-  border-radius: 12px;        /* Bordes redondeados */
-  padding: 0px;               /* Espacio entre imagen y borde */
-  background-color: white;    /* Fondo para que no se vea raro con fondo claro */
+  border: 3px solid #000000; 
+  border-radius: 12px;       
+  padding: 0px;               
+  background-color: white;    
 }
 
 

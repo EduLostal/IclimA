@@ -98,7 +98,7 @@ def descargar_mes_a_mes(desde: str, hasta: str):
         if not exito:
             print(f"🚫 Día {fecha_log} fallido tras 3 intentos. Saltando.\n")
 
-        # Guardar si cambiamos de mes o es el último día
+        
         nuevo_mes = fecha.month
         if mes_actual is None:
             mes_actual = nuevo_mes

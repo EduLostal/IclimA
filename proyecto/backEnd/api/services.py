@@ -20,42 +20,43 @@ def ejecutar_script(script_path: str):
         print(f"❌ Error ejecutando {script_path}: {e}")
         raise
 
-def parquet_desactualizado() -> bool:
-    try:
-        if not os.path.exists(PARQUET_PATH):
-            return True
+# def parquet_desactualizado() -> bool:
+#     try:
+#         if not os.path.exists(PARQUET_PATH):
+#             return True
 
-        df_json = pd.read_json(JSON_PATH)
-        df_parquet = pd.read_parquet(PARQUET_PATH)
+#         df_json = pd.read_json(JSON_PATH)
+#         df_parquet = pd.read_parquet(PARQUET_PATH)
 
-        fecha_json = pd.to_datetime(df_json["fecha"], errors="coerce").max()
-        fecha_parquet = pd.to_datetime(
-            df_parquet["año"].astype(str) + "-" +
-            df_parquet["mes"].astype(str) + "-" +
-            df_parquet["dia"].astype(str),
-            errors="coerce"
-        ).max()
+#         fecha_json = pd.to_datetime(df_json["fecha"], errors="coerce").max()
+#         fecha_parquet = pd.to_datetime(
+#             df_parquet["año"].astype(str) + "-" +
+#             df_parquet["mes"].astype(str) + "-" +
+#             df_parquet["dia"].astype(str),
+#             errors="coerce"
+#         ).max()
 
-        if fecha_json > fecha_parquet:
-            print("📌 Parquet desactualizado respecto al JSON.")
-            return True
-        return False
+#         if fecha_json > fecha_parquet:
+#             print("📌 Parquet desactualizado respecto al JSON.")
+#             return True
+#         return False
 
-    except Exception as e:
-        print(f"⚠️ Error comparando fechas: {e}")
-        return True
+#     except Exception as e:
+#         print(f"⚠️ Error comparando fechas: {e}")
+#         return True
+
 
 def predecir_para_fecha_y_estacion(fecha: datetime, estacion: str):
     print("🔄 Ejecutando flujo completo...")
 
-    # 1. Ejecutar daysCheck (llama internamente a downloader y formatter)
+
     ejecutar_script(os.path.join(BASE_DIR, "aemet", "daysCheck.py"))
 
-    # 2. Reentrenar si el parquet quedó desactualizado después del formateo
-    if parquet_desactualizado():
-        ejecutar_script(os.path.join(BASE_DIR, "model", "trainer.py"))
+    
+    #if parquet_desactualizado():
+        #ejecutar_script(os.path.join(BASE_DIR, "model", "trainer.py"))
 
-    # 3. Cargar el modelo y realizar la predicción
+
     predictor = Predictor(MODEL_PATH, PARQUET_PATH, FEATURES_PATH)
     predictor.cargar_modelo_y_datos()
     input_df = predictor.preparar_input(fecha)
